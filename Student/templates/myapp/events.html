@@ -1,0 +1,66 @@
+<!doctype html>
+{% load static %}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $.get("{% url 'navStudent' %}", function(data){
+            console.log("start nav");
+            $(".navigation").replaceWith(data);
+            append();
+        });
+        function append(){
+            document.getElementById("container-fluid").innerHTML="<br><br><br>"+(document.getElementById("main").innerHTML);
+            console.log(document.getElementById("container-fluid"));
+            console.log(document.getElementById("main").innerHTML);
+            console.log("done apend");
+        }
+
+    </script>
+    <script>
+
+    </script>
+
+</head>
+
+<body >
+<div id="main" style=" display: none;">
+    {% if flag == 1 %}
+    <h1>You have already registered!</h1>
+
+        {% endif %}
+    {%for event in events%}
+    <div style="background-color:white;">
+           <hr>
+        <b> Name: {{event.0}} &nbsp;&nbsp;</b>
+                <form action="{% url 'eventregister' %}" method="post" id="forVoting">
+
+                {% csrf_token %}
+                    <input type="hidden" name="eid" value="{{event.7}}">
+                    <input type="hidden" name="ename" value="{{event.0}}">
+                    <input type="hidden" name="name" value="{{args.2}}">
+                    <input type="hidden" name="email" value="{{args.3}}">
+                    <input type="hidden" name="contact" value="{{args.4}}">
+                    <input type="hidden" name="amount" value="{{event.5}}">
+               <div style="float:right;"><button  class="btn btn-success" name="accept">register</button>&nbsp;&nbsp;
+                   </div>
+                </form>
+           <hr>
+           <details>
+               <summary>
+                   <b>{{event.1}}</b>
+               </summary>
+           </details>
+        <b>Author</b> :{{event.6}}<br>
+        <b>Date</b>: {{event.2}}<br>
+        <b>Time</b>: From {{event.3}} To {{event.4}}<br>
+        <b>Amount</b>: {{event.5}}
+           <br>
+           <br>
+           <hr>
+       </div>
+
+    {% endfor %}
+</div>
+<div class="navigation"></div>
+</body>
+</html>

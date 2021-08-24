@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Offer Letter</title>
+</head>
+<body>
+
+
+</body>
+</html>
+
+
+<!doctype html>
+{% load static %}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $.get("{% url 'navStudent' %}", function(data){
+            console.log("start nav");
+            $(".navigation").replaceWith(data);
+            append();
+        });
+        function append(){
+            document.getElementById("container-fluid").innerHTML="<br><br><br>"+(document.getElementById("main").innerHTML);
+            console.log(document.getElementById("container-fluid"));
+            console.log(document.getElementById("main").innerHTML);
+            console.log("done apend");
+        }
+    </script>
+</head>
+
+<body >
+<div id="main" style="display: none;">
+    <br><br>
+    {%if msg%}
+    <h4>{{msg}}</h4>
+    {%endif%}
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+                    <p>{{ form.non_field_errors }}</p>
+                        <h3><center><p style="background-color:coral; font-size:50px;">{{ form.docfile.label_tag }} </p></center></h3>
+                    <p><center>
+                        {{ form.docfile.errors }}
+                        {{ form.docfile }}
+                    </center></p>
+                    <p><center>
+        <input type="text" name="Cnsme" placeholder="Company Name" id="Cname"/><br><br>
+        <input type="submit" value="Upload"  class="btn btn-primary btn-block" /></center></p>
+    </form>
+    <br>
+        &nbsp;
+</div>
+<div class="navigation"></div>
+</body>
+</html>

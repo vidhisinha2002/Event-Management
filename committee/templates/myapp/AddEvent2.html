@@ -1,0 +1,137 @@
+<!doctype html>
+{% load static %}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $.get("{% url 'navCommittee' %}", function(data){
+            console.log("start nav");
+            $(".navigation").replaceWith(data);
+            append();
+        });
+        function append(){
+            document.getElementById("container-fluid").innerHTML="<br><br><br>"+(document.getElementById("main").innerHTML);
+            console.log(document.getElementById("container-fluid"));
+            console.log(document.getElementById("main").innerHTML);
+            console.log("done apend");
+        }
+    </script>
+</head>
+
+<body >
+<div id="main" style="display: none;">
+    <br><br>
+    {%if message%}
+    <h3>{{message}}</h3>
+    {%endif%}
+    <h3>Add Event</h3>
+    {% if data %}
+<form action="{% url 'EditEvent' %}" method="POST">
+    <input type="hidden" name="ID" id="ID" value="{{data.8}}">
+    {% else %}
+<form action="{% url 'AddEvent' %}" method="POST">
+    {% endif %}
+
+          {% csrf_token %}
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="Ename">Event Name</label>
+                  {% if data %}
+                <input class="form-control" name="Ename" id="Ename" type="text" aria-describedby="nameHelp" placeholder="Event Name" disabled value="{{data.0}}">
+                  {%else %}
+                  <input class="form-control" name="Ename" id="Ename" type="text" aria-describedby="nameHelp" placeholder="Event Name"  value="{{data.0}}">
+                  {%endif%}
+              </div>
+              <div class="col-md-6">
+                <label for="Edescription">Event Description</label>
+                  <textarea class="form-control" name="Edescription" id="Edescription"  aria-describedby="nameHelp"
+                            placeholder="Enter Description" required >{{data.1}}</textarea>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="sDate">Start Date</label>
+                {% if data %}
+                  <input class="form-control" name="sDate" id="sDate" type="text" placeholder="YYYY:MM:DD"  disabled value="{{data.2}}">
+                  {%else%}
+                  <input class="form-control" name="sDate" id="sDate" type="text" placeholder="YYYY:MM:DD"  value="{{data.2}}">
+                  {%endif%}
+              </div>
+              <div class="col-md-6">
+                <label for="location">Location</label>
+                {% if data %}
+                <input class="form-control" name="location" id="location" type="number" placeholder="Location"  disabled value="{{data.3}}">
+                {% else %}
+                <input class="form-control" name="location" id="location" type="number" placeholder="Location"  value="{{data.3}}">
+                {%endif%}
+              </div>
+            </div>
+          </div>
+
+    <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="branch">Select Branch</label>
+                  <select class="form-control" id="branch" name="branch">
+                    <option>CS</option>
+                    <option>Ex</option>
+                    <option>IT</option>
+                    <option>CE</option>
+                      <option>Me</option>
+                  </select>
+                </div>
+              </div>
+
+        <div class="form-row">
+              <div class="col-md-6">
+                <label for="year">Year</label>
+                  <select class="form-control" id="year" name="year">
+                    <option>BE</option>
+                    <option>TE</option>
+                    <option>SE</option>
+                    <option>FE</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+
+    <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="sTime">Start Time</label>
+                <input class="form-control" name="sTime" id="sTime" type="text" placeholder="Enter hours in 24 HR"  value="{{data.4}}">
+              </div>
+              <div class="col-md-6">
+                <label for="etime">End Time</label>
+                <input class="form-control" name="etime" id="etime" type="text" placeholder="Enter hours in 24 HR"  value="{{data.5}}">
+              </div>
+            </div>
+          </div>
+
+    <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="amount">Amount</label>
+                <input class="form-control" name="amount" id="amount" type="number" placeholder="Enter the amount"  value="{{data.6}}">
+              </div>
+              <div class="col-md-6">
+                <label for="Authors">Authors</label>
+                  <textarea class="form-control" name="Authors" id="Authors" type="text" placeholder="Authors Names"  required>{{data.7}}</textarea>
+              </div>
+            </div>
+          </div>
+        {%if data %}
+          <input type="submit" class="btn btn-primary btn-block" name="EditEvent" value="Edit Event">
+        {%else%}
+          <input type="submit" class="btn btn-primary btn-block" name="AddEvent" value="Add Event">
+        {%endif%}
+        </form>
+
+    <br><br>
+</div>
+<div class="navigation"></div>
+</body>
+</html>

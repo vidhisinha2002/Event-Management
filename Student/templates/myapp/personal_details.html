@@ -1,0 +1,86 @@
+
+<!doctype html>
+{% load static %}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $.get("{% url 'navStudent' %}", function(data){
+            console.log("start nav");
+            $(".navigation").replaceWith(data);
+            append();
+        });
+        function append(){
+            document.getElementById("container-fluid").innerHTML="<br><br><br>"+(document.getElementById("main").innerHTML);
+            console.log(document.getElementById("container-fluid"));
+            console.log(document.getElementById("main").innerHTML);
+            console.log("done apend");
+        }
+    </script>
+</head>
+
+<body >
+<div id="main" style="display: none;">
+    <br><br>
+    <h1>Welcome ,{{rollno}}</h1>
+    <br><br>
+    <div class="container">
+    <form method="POST" action="{% url 'personal_details' %}">
+        {%  csrf_token %}
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="name">Name :</label>
+                    <input type="text" class="col-md form-control" name="name" value="{{result.1}}">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="year">Year :</label>
+                    <input type="text" class="col-md form-control" name="year" value="{{result.2}}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="branch">Branch :</label>
+                    <input type="text" class="col-md form-control" name="branch"value="{{result.3}}">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="address">Address :</label>
+                    <input type="text" class="col-md form-control" name="address" value="{{result.4}}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="contact">Contact :</label>
+                    <input type="text" class="col-md form-control" name="contact"value="{{result.7}}">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="dob">DOB :</label>
+                    <input type="text" class="col-md form-control" name="dob"value="{{result.8}}">
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <button class="btn btn-info" type="submit">Submit</button>
+        </div>
+        <br>
+        <div id="successmsg">
+            {{success}}
+        </div>
+    </form>
+    </div>
+</div>
+<div class="navigation">
+
+</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $.get("{% url 'navTPC' %}", function(data){
+            console.log("start nav");
+            $(".navigation").replaceWith(data);
+            append();
+        });
+        function append(){
+            document.getElementById("container-fluid").innerHTML="<br><br><br>"+(document.getElementById("main").innerHTML);
+            console.log(document.getElementById("container-fluid"));
+            console.log(document.getElementById("main").innerHTML);
+            console.log("done apend");
+        }
+    </script>
+    <meta charset="UTF-8">
+    <title>Update Password</title>
+</head>
+<body>
+
+<div id="main" style="display: none;">
+    <div style="background-color: orange; font-size:20px; font-family: Times New Roman;">
+        {% if success %}
+        <h4>{{success}}</h4>
+        {% endif %}
+        <br>
+        <center><b>Update Your Password</b></center>
+        <br>
+    </div>
+    <br>
+    <form action="{% url 'newpwd' %}" method="POST">
+          {% csrf_token %}
+          <div class="form-group" style="background-color: orange; margin-right: 120px; margin-left: 120px;">
+              <br><br>
+            <div class="form-row">
+              <div class="col-md-5">
+                  <label style="margin-left: 150px;" for="newpwd">&nbsp;&nbsp;&nbsp;<b>New Password</b></label>
+                  <input style="margin-left: 160px;" class="form-control" name="newpwd" id="newpwd" type="text" placeholder="New Password" required>
+                <span id='message1'></span>
+              </div>
+                <br>
+
+            </div>
+             <div class="form-row">
+              <div class="col-md-5">
+                  <label style="margin-left: 150px;" for="cpwd">&nbsp;&nbsp;&nbsp;<b>Confirm Password</b></label>
+                  <input style="margin-left: 160px;" class="form-control" name="cpwd" id="cpwd" type="text" placeholder="Confirm Password" required>
+              </div>
+
+            </div>
+              <br>
+              <br>
+          </div>
+          <input type="submit" class="btn btn-primary btn-block" name="Update" value="Update">
+        </form>
+</div>
+<div class="navigation"></div>
+</body>
+</html>

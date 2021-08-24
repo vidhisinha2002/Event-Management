@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $.get("{% url 'navTPC' %}", function(data){
+            console.log("start nav");
+            $(".navigation").replaceWith(data);
+            append();
+        });
+        function append(){
+            document.getElementById("container-fluid").innerHTML="<br><br><br>"+(document.getElementById("main").innerHTML);
+            console.log(document.getElementById("container-fluid"));
+            console.log(document.getElementById("main").innerHTML);
+            console.log("done apend");
+        }
+    </script>
+
+
+    <meta charset="UTF-8">
+    <title>History</title>
+</head>
+<body>
+<div id="main" style="display: none;">
+    <br>
+<div style="background-color: cyan; font-size:20px; font-family: Times New Roman;">
+    <br>
+   <h2><center> List of companies </center></h2>
+    <br>
+</div>
+<div style="background-color: orange; font-size:20px; font-family: Times New Roman;">
+    &nbsp;
+{% for i in companies %}
+    <br>
+    <pre> > <b>{{i}}</b></pre>
+    <form action="{% url 'generatelist' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="cname" value="{{i}}"/>
+        <button style="float:left;" class="btn" name="gen">Generate List</button>
+    </form>
+    <br>
+{% endfor %}
+    <br><br>
+</div>
+</div>
+<div class="navigation"></div>
+</body>
+</html>

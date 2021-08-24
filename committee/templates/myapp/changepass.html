@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+
+     function check() {
+     var s=document.getElementById('newpass').innerHTML;
+    console.log("test"+document.getElementById('newpass').value+"\t"+document.getElementById('cpass').value+"end");
+  if (document.getElementById('newpass').value == document.getElementById('cpass').value) {
+    document.getElementById('message').style.color = 'green';
+    document.getElementById('message').innerHTML = 'matching';
+  } else {
+    document.getElementById('message').style.color = 'red';
+    document.getElementById('message').innerHTML = 'not matching';
+  }
+}
+
+        $.get("{% url 'navCommittee' %}", function(data){
+            console.log("start nav");
+            $(".navigation").replaceWith(data);
+            append();
+        });
+        function append(){
+            document.getElementById("container-fluid").innerHTML="<br><br><br>"+(document.getElementById("main").innerHTML);
+            console.log(document.getElementById("container-fluid"));
+            console.log(document.getElementById("main").innerHTML);
+            console.log("done apend");
+        }
+    </script>
+    <title>Update Password</title>
+</head>
+<body>
+
+<div id="main" style="display: none;">
+    <div style="background-color: orange; font-size:20px; font-family: Times New Roman;">
+        {% if success %}
+        <h4>{{success}}</h4>
+        {% endif %}
+        <br>
+        <center><b>Update Your Password</b></center>
+        <br>
+    </div>
+    <br>
+    <form action="{% url 'newpass' %}" method="POST">
+          {% csrf_token %}
+          <div class="form-group" style="background-color: cyan; margin-right: 120px; margin-left: 120px;">
+              <br><br>
+            <div class="form-row">
+              <div class="col-md-5">
+                  <label style="margin-left: 150px;" for="newpass">&nbsp;&nbsp;&nbsp;<b>New Password</b></label>
+                  <input style="margin-left: 160px;" class="form-control" name="newpass" id="newpass" type="password" placeholder="New Password" onblur='check();' required>
+              </div>
+                <br>
+
+            </div>
+             <div class="form-row">
+              <div class="col-md-5">
+                  <label style="margin-left: 150px;" for="cpass">&nbsp;&nbsp;&nbsp;<b>Confirm Password</b></label>
+                  <input style="margin-left: 160px;" class="form-control" name="cpass" id="cpass" type="password" placeholder="Confirm Password" onblur='check();' required>
+                  <span id='message'></span>
+              </div>
+
+            </div>
+              <br>
+              <br>
+          </div>
+          <input type="submit" class="btn btn-primary btn-block" name="Update" value="Update">
+        </form>
+</div>
+<div class="navigation"></div>
+</body>
+</html>

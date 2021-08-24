@@ -1,0 +1,36 @@
+<!doctype html>
+{% load static %}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $.get("{% url 'navTPC' %}", function(data){
+            console.log("start nav");
+            $(".navigation").replaceWith(data);
+            append();
+        });
+        function append(){
+            document.getElementById("container-fluid").innerHTML="<br><br><br>"+(document.getElementById("main").innerHTML);
+            console.log(document.getElementById("container-fluid"));
+            console.log(document.getElementById("main").innerHTML);
+            console.log("done apend");
+        }
+    </script>
+</head>
+
+<body >
+<div id="main" style="display: none;">
+    <br><h3>Notice Board</h3>
+    <div style="background-color: orange; font-size:20px; font-family: Times New Roman;">
+    &nbsp;
+    {% for t,d in title.items %}
+        <b> Title:</b> <b>{{t}}</b>
+        <br>
+         <b>{{d}}</b>
+    <hr>
+    {% endfor %}
+    </div>
+    <br><br>
+</div>
+<div class="navigation"></div>
+</body>
+</html>

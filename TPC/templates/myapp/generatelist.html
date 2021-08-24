@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $.get("{% url 'navTPC' %}", function(data){
+            console.log("start nav");
+            $(".navigation").replaceWith(data);
+            append();
+        });
+        function append(){
+            document.getElementById("container-fluid").innerHTML="<br><br><br>"+(document.getElementById("main").innerHTML);
+            console.log(document.getElementById("container-fluid"));
+            console.log(document.getElementById("main").innerHTML);
+            console.log("done apend");
+        }
+    </script>
+    <meta charset="UTF-8">
+    <title>generatelist</title>
+</head>
+<body>
+
+<div id="main" style="display: none;">
+<div style="background-color: cyan; font-size:20px; font-family: Times New Roman;">
+    <br>
+   <h2><center> List of eligible students </center></h2>
+    <br>
+</div>
+<div style="background-color: orange; font-size:20px; font-family: Times New Roman;">
+    &nbsp;
+{% for i in studlist %}
+    <pre> > <b>{{i}}</b></pre>
+    <hr>
+{% endfor %}
+</div>
+</div>
+<div class="navigation"></div>
+</body>
+</html>

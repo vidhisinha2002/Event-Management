@@ -1,0 +1,153 @@
+<!doctype html>
+{% load static %}
+<head>
+    <style type="text/css">
+        textarea{
+
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $.get("{% url 'navStudent' %}", function(data){
+            console.log("start nav");
+            $(".navigation").replaceWith(data);
+            append();
+        });
+        function append(){
+            document.getElementById("container-fluid").innerHTML="<br><br><br>"+(document.getElementById("main").innerHTML);
+            console.log(document.getElementById("container-fluid"));
+            console.log(document.getElementById("main").innerHTML);
+            console.log("done apend");
+        }
+    </script>
+</head>
+
+<body >
+<div id="main" style="display: none;">
+    <br><br>
+    <h1>Welcome ,{{rollno}}</h1>
+    <br><br>
+    <div class="container">
+    <form method="POST" action="{% url 'other_details' %}">
+        {%  csrf_token %}
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="ssc">SSC :</label>
+                    <input type="text" class="col-md form-control" name="ssc" value="{{result.2}}">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="hsc">HSC :</label>
+                    <input type="text" class="col-md form-control" name="hsc" value="{{result.3}}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="s1">SEM 1 :</label>
+                    <input type="text" class="col-md form-control" name="s1" value="{{result.4}}">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="s2">SEM 2 :</label>
+                    <input type="text" class="col-md form-control" name="s2" value="{{result.5}}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="s3">SEM 3 :</label>
+                    <input type="text" class="col-md form-control" name="s3" value="{{result.6}}">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="s4">SEM 4 :</label>
+                    <input type="text" class="col-md form-control" name="s4" value="{{result.7}}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="s5">SEM 5 :</label>
+                    <input type="text" class="col-md form-control" name="s5" value="{{result.8}}">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="s6">SEM 6 :</label>
+                    <input type="text" class="col-md form-control" name="s6" value="{{result.9}}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="s7">SEM 7 :</label>
+                    <input type="text" class="col-md form-control" name="s7" value="{{result.10}}">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="s8">SEM 8 :</label>
+                    <input type="text" class="col-md form-control" name="s8" value="{{result.11}}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="live_kt">Live KT :</label>
+                    <input type="text" class="col-md form-control" name="live_kt" value="{{result.15}}">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="dead_kt">Dead KT :</label>
+                    <input type="text" class="col-md form-control" name="dead_kt" value="{{result.16}}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="objective">Objective :</label>
+                    <textarea class="form-control" rows="5" name="objective" value="{{result.12}}">{{result.12}}</textarea>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="achievement">Achievement :</label>
+                    <textarea class="form-control" rows="5" name="achievement" value="{{result.13}}">{{result.13}}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="extra">Extra activities :</label>
+                    <textarea class="form-control" rows="5" name="extra" value="{{result.14}}">{{result.14}}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <button class="btn btn-info" type="submit">Submit</button>
+        </div>
+        <br>
+        <div id="successmsg">
+            {{success}}
+        </div>
+    </form>
+    </div>
+</div>
+<div class="navigation">
+
+</div>
+</body>
+</html>

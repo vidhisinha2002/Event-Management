@@ -1,0 +1,89 @@
+<!doctype html>
+{% load static %}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $.get("{% url 'navCommittee' %}", function(data){
+            console.log("start nav");
+            $(".navigation").replaceWith(data);
+            append();
+        });
+        function append(){
+            document.getElementById("container-fluid").innerHTML="<br><br><br>"+(document.getElementById("main").innerHTML);
+            console.log(document.getElementById("container-fluid"));
+            console.log(document.getElementById("main").innerHTML);
+            console.log("done apend");
+        }
+    </script>
+
+</head>
+
+<body >
+<div id="main" style="display: none;">
+    <br><br>
+    {%if message%}
+    <h3>{{message}}</h3>
+    {%endif%}
+    <h3>Reschedule Event</h3>
+
+<form action="{% url 'reschdule' %}" method="POST">
+    <input type="hidden" name="ID" id="ID" value="{{data.8}}">
+          {% csrf_token %}
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="Ename">Event Name</label>
+                <input class="form-control" name="Ename" id="Ename" type="text" aria-describedby="nameHelp" placeholder="Event Name" disabled value="{{data.0}}">
+              </div>
+              <div class="col-md-6">
+                <label for="Edescription">Event Description</label>
+                  <textarea class="form-control" name="Edescription" id="Edescription" type="text" aria-describedby="nameHelp" placeholder="Enter Description" disabled>{{event.1}}</textarea>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="sDate">Start Date</label>
+                  <input class="form-control" name="sDate" id="sDate" type="text" placeholder="YYYY:MM:DD"   value="{{data.2}}">
+              </div>
+              <div class="col-md-6">
+                <label for="location">Location</label>
+                <input class="form-control" name="location" id="location" type="number" placeholder="Location"  value="{{data.3}}">
+              </div>
+            </div>
+          </div>
+
+    <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="sTime">Start Time</label>
+                <input class="form-control" name="sTime" id="sTime" type="text" placeholder="Enter hours in 24 HR"   value="{{data.4}}">
+              </div>
+              <div class="col-md-6">
+                <label for="etime">End Time</label>
+                <input class="form-control" name="etime" id="etime" type="text" placeholder="Enter hours in 24 HR"   value="{{data.5}}">
+              </div>
+            </div>
+          </div>
+
+    <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="amount">Amount</label>
+                <input class="form-control" name="amount" id="amount" type="number" placeholder="Enter the amount"  disabled value="{{data.6}}">
+              </div>
+              <div class="col-md-6">
+                <label for="Authors">Authors</label>
+                  <textarea class="form-control" name="Authors" id="Authors" type="text" placeholder="Authors Names"  disabled >{{data.7}}</textarea>
+              </div>
+            </div>
+          </div>
+          <input type="submit" class="btn btn-primary btn-block" name="Reschedule" value="Reschedule">
+        </form>
+
+    <br><br>
+</div>
+<div class="navigation"></div>
+</body>
+</html>

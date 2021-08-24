@@ -1,0 +1,81 @@
+<!doctype html>
+{% load static %}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $.get("{% url 'navAdmin' %}", function(data){
+            console.log("start nav");
+            $(".navigation").replaceWith(data);
+            append();
+        });
+        function append(){
+            document.getElementById("container-fluid").innerHTML="<br><br><br>"+(document.getElementById("main").innerHTML);
+            console.log(document.getElementById("container-fluid"));
+            console.log(document.getElementById("main").innerHTML);
+            console.log("done apend");
+        }
+
+        $(document).ready(function(){
+            $(".btn").click(function(e){
+            e.preventDefault();
+                $.ajax({
+                    type:'POST',
+                    url:'{% url 'operate'%}',
+                    data:{
+                        operation:this.name,
+                        id:this.id,
+                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success:function(){
+                        alert("Operation Successful");
+                    }
+                });
+            });
+        });
+
+    </script>
+</head>
+
+<body >
+<div id="main" style="display: none;">
+    <br><br>
+
+    {% if mode %}
+        <div style=>
+        {% for event in context %}
+           <div style="background-color:white;">
+               <hr>
+               <b>ID: {{ event.0 }} Name: {{event.2}} &nbsp;&nbsp;
+                    <form action="" method="post" id="forVoting">
+                    {% csrf_token %}
+                   <div style="float:right;"><button class="btn btn-success" name="accept" id="{{event.0}}" >accept</button>&nbsp;&nbsp;
+                       <button class="btn btn-danger" name="reject" id="{{event.0}}">reject</button>&nbsp;&nbsp;&nbsp;&nbsp;</div></b>
+                    </form>
+               <hr>
+               <details>
+                   <summary>
+                       {{event.2}}
+                   </summary>
+                   {{event.3}}
+               </details>
+               Date: {{event.4}}<br>
+               Time: From {{event.5}} To {{event.6}}
+               Room ID: {{event.7}}
+               <br>Target Audience{{event.9}}"-"{{event.8}}
+               <br> Status :{% if event.11 == 1 %}
+                                Approved.
+                            {%elif event.11 == -1%}
+                                Rejected.
+                            {%else%}
+                                Queued.
+                            {%endif%}
+               <hr>
+           </div>
+        {%endfor%}
+        </div>
+    {%endif%}
+    <br><br>
+</div>
+<div class="navigation"></div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+{% load static %}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $.get("{% url 'navAdmin' %}", function(data){
+            console.log("start nav");
+            $(".navigation").replaceWith(data);
+            append();
+        });
+        function append(){
+            document.getElementById("container-fluid").innerHTML="<br><br><br>"+(document.getElementById("main").innerHTML);
+            console.log(document.getElementById("container-fluid"));
+            console.log(document.getElementById("main").innerHTML);
+            console.log("done apend");
+        }
+    </script>
+</head>
+
+<body >
+<div id="main" style="display: none;">
+    <br><br>
+    {% if msg %}
+        <h5>{{msg}}</h5>
+    {% endif %}
+    <form action="{% url 'createCommittee' %}" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="email">Email</label>
+                <input class="form-control" name="email" id="email" type="email" aria-describedby="nameHelp" placeholder="Enter email" required>
+              </div>
+              <div class="col-md-6">
+                <label for="id">ID</label>
+                  <input class="form-control" name="id" id="id"  aria-describedby="nameHelp" placeholder="Enter ID" required>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="cname">Committee Name</label>
+                <input class="form-control" name="cname" id="cname" type="text" placeholder="Enter Committee Name"  required>
+              </div>
+            </div>
+          </div>
+          <input type="submit" class="btn btn-primary btn-block" name="add" value="Add Committee User">
+        </form>
+    <br><br>
+</div>
+<div class="navigation"></div>
+</body>
+</html>

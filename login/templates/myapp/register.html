@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <script>
+
+    var check = function() {
+  if (document.getElementById('pwd').value ==
+    document.getElementById('cpwd').value) {
+    document.getElementById('message').style.color = 'green';
+    document.getElementById('message').innerHTML = 'matching';
+  } else {
+    document.getElementById('message').style.color = 'red';
+    document.getElementById('message').innerHTML = 'not matching';
+  }
+}
+
+    var checkno = function() {
+    n=document.getElementById('pno').value
+    x=n.length
+    var phoneno = /^\d{10}$/;
+    if (x<10 || x>10){
+      document.getElementById('msg').style.color = 'red';
+      document.getElementById('msg').innerHTML = 'Enter valid contact number';
+    }
+    else{
+      document.getElementById('msg').style.color = 'green';
+      document.getElementById('msg').innerHTML = ' ';
+    }
+    if(isNaN(n))
+    {
+      document.getElementById('msg').style.color = 'red';
+      document.getElementById('msg').innerHTML = 'Enter valid contact number';
+    }
+
+
+  }
+  </script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Register User</title>
+  <!-- Bootstrap core CSS-->
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- Custom fonts for this template-->
+  <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+  <!-- Custom styles for this template-->
+  <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
+</head>
+
+<body class="bg-dark">
+  <div class="container">
+    <div class="card card-register mx-auto mt-5">
+      <div class="card-header">Register an Account</div>
+      <div class="card-body">
+        <form action="{% url 'registerProc' %}" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="email">Email ID</label>
+                <input class="form-control" name="email" id="email" type="email" aria-describedby="nameHelp" placeholder="Enter Email ID" required>
+              </div>
+              <div class="col-md-6">
+                <label for="rollno">Roll Number</label>
+                <input class="form-control" name="rollno" id="rollno" type="text" aria-describedby="nameHelp" placeholder="Enter Roll number" required>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="pwd">Password</label>
+                <input class="form-control" name="pwd" id="pwd" type="password" placeholder="Password" onkeyup='check();' required>
+              </div>
+              <div class="col-md-6">
+                <label for="cpwd">Confirm password</label>
+                <input class="form-control" name="cpwd" id="cpwd" type="password" placeholder="Confirm password" onkeyup='check();' required>
+                <span id='message'></span>
+              </div>
+            </div>
+          </div>
+          <input type="submit" class="btn btn-primary btn-block" name="Register" value="Register">
+        </form>
+        <div class="text-center">
+          <a class="d-block small mt-3" href="{% url 'login' %}">Login Page</a>
+          <a class="d-block small" href="{% url 'forgotPass'%}">Forgot Password?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap core JavaScript-->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+</body>
+
+</html>

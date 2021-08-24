@@ -1,0 +1,36 @@
+class Event:
+    conn = ""
+
+    def __init__(self):
+        self.conn = connections['default']
+
+    def getAllEventApprovalRequest(self):
+        query = "select * from events where approve_status=0 ORDER BY event_timestamp ASC"
+        cursor = self.conn.cursor()
+        print(query)
+        cursor.execute(query)
+        return cursor.fetchall()
+
+    def setEventStatus(self, status, eid):
+        query = "update events set approve_status=" + str(status) + " where eid=" + str(eid)
+        cursor = self.conn.cursor()
+        if cursor.execute(query):
+            print("done")
+        else:
+            print("not done")
+    
+
+class Notice:
+    conn = ""
+
+    def __init__(self):
+        self.conn = connections['default']
+
+    def createNotice(self, title, desc, date, time):
+        query = "insert into notice (title,description,date,time) values('" + title + "','" + desc + "','" + date + "','" + time + "')"
+        cursor = self.conn.cursor()
+        if cursor.execute(query):
+            self.conn.commit()
+            return cursor.lastrowid
+        return -1
+

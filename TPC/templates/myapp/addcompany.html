@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $.get("{% url 'navTPC' %}", function(data){
+            console.log("start nav");
+            $(".navigation").replaceWith(data);
+            append();
+        });
+        function append(){
+            document.getElementById("container-fluid").innerHTML="<br><br><br>"+(document.getElementById("main").innerHTML);
+            console.log(document.getElementById("container-fluid"));
+            console.log(document.getElementById("main").innerHTML);
+            console.log("done apend");
+        }
+    </script>
+    <meta charset="UTF-8">
+    <title>Add new company</title>
+</head>
+<body>
+
+<div id="main" style="display: none;">
+    <div style="background-color: orange; font-size:20px; font-family: Times New Roman;">
+        <br>
+        <center><b>ADD NEW COMPANY</b></center>
+        <br>
+    </div>
+    <br>
+    <form action="{% url 'registercompany' %}" method="POST">
+          {% csrf_token %}
+          <div class="form-group" style="background-color: orange;">
+              <br><br>
+            <div class="form-row">
+              <div class="col-md-6">
+                  <label for="name"><b>Company Name</b></label>
+                <input class="form-control" name="name" id="name" type="text" placeholder="Company name" required>
+              </div>
+              <div class="col-md-6">
+                <label for="ssc"><b>SSC</b></label>
+                <input class="form-control" name="ssc" id="ssc" type="number" placeholder="Average pointer" required>
+                <span id='message1'></span>
+              </div>
+
+              <div class="col-md-6">
+                <label for="hsc"><b>HSC</b></label>
+                <input class="form-control" name="hsc" id="hsc" type="number" placeholder="HSC percentage" required>
+              </div>
+              <div class="col-md-6">
+                <label for="avg_ptr"><b>Average Pointer</b></label>
+                <input class="form-control" name="avg_ptr" id="avg_ptr" type="number" placeholder="Average pointer" required>
+                <span id='message'></span>
+              </div>
+              <div class="col-md-6">
+                <label for="live_kt"><b>Live-KT</b></label>
+                <input class="form-control" name="live_kt" id="live_kt" placeholder="No of live kt's" required>
+                <span id='live'></span>
+              </div>
+                <div class="col-md-6">
+                <label for="dead_kt"><b>Dead-KT</b></label>
+                <input class="form-control" name="dead_kt" id="dead_kt" placeholder="No of dead kt's" required>
+                <span id='dead'></span>
+              </div>
+                <div class="col-md-6">
+                <label for="dead_kt"><b>Link</b></label>
+                <input class="form-control" name="link" id="link" placeholder="Enter Link for registrations." required>
+                <span id='Link_S'></span>
+              </div>
+            </div>
+              <br><br>
+          </div>
+          <input type="submit" class="btn btn-primary btn-block" name="Register" value="Register">
+        </form>
+</div>
+<div class="navigation"></div>
+</body>
+</html>

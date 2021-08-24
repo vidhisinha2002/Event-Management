@@ -1,0 +1,78 @@
+<!doctype html>
+{% load static %}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $.get("{% url 'navStudent' %}", function(data){
+            console.log("start nav");
+            $(".navigation").replaceWith(data);
+            append();
+        });
+        function append(){
+            document.getElementById("container-fluid").innerHTML="<br><br><br>"+(document.getElementById("main").innerHTML);
+            console.log(document.getElementById("container-fluid"));
+            console.log(document.getElementById("main").innerHTML);
+            console.log("done apend");
+        }
+    </script>
+    <style>
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+</style>
+</head>
+
+<body >
+<div id="main" style="display: none;">
+    <br><br>
+    {%if P %}
+        <div style="background-color:white;">
+            <div ><center>
+                <img src="{% static 'images/person.png' %}" width="100px" height="100px"></div>
+                </center>
+                <div>
+                    Objective: <p>{{AC.12}}</p>
+                </div>
+                <table style=" width:100%;">
+                    <tr><td>Name</td><td>{{P.1}}</td></tr>
+                    <tr><td>Roll no</td><td>{{P.0}}</td></tr>
+                    <tr><td>year</td><td>{{P.2}}</td></tr>
+                    <tr><td>branch</td><td>{{P.3}}</td></tr>
+                    <tr><td>Address</td><td>{{P.4}}</td></tr>
+                    <tr><td>Email</td><td>{{P.5}}</td></tr>
+                    <tr><td>contact</td><td>{{P.7}}</td></tr>
+                    <tr><td>DOB</td><td>{{P.8}}</td></tr>
+                </table>
+                <table style=" width:100%;">
+                    <tr><td>SSC</td><td>{{AC.2}}</td></tr>
+                    <tr><td>HSC</td><td>{{AC.3}}</td></tr>
+                    <tr><td>sem1</td><td>{{AC.4}}</td></tr>
+                    <tr><td>sem2</td><td>{{AC.5}}</td></tr>
+                    <tr><td>sem3</td><td>{{AC.6}}</td></tr>
+                    <tr><td>sem4</td><td>{{AC.7}}</td></tr>
+                    <tr><td>sem5</td><td>{{AC.8}}</td></tr>
+                    <tr><td>sem6</td><td>{{AC.9}}</td></tr>
+                </table>
+                <div>
+                    Extra-Curricular: <p>{{AC.13}}</p>
+                </div>
+                <div>
+                    Achievement: <p>{{AC.14}}</p>
+                </div>
+        </div>
+    {%endif%}
+    <br><br>
+</div>
+<div class="navigation"></div>
+</body>
+</html>

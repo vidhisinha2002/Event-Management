@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% load static %}
+<meta charset='utf-8' />
+<link href="{% static 'fullcalendar.min.css'%}" rel='stylesheet' />
+<link href="{% static 'fullcalendar.print.min.css'%}" rel='stylesheet' media='print' />
+<script src="{% static 'lib/moment.min.js'%}"></script>
+<script src="{% static 'lib/jquery.min.js'%}"></script>
+<script src="{% static 'fullcalendar.min.js'%}"></script>
+<script>
+
+  $(document).ready(function() {
+  $(".back").click(function(e){
+                history.back();
+            });
+
+  {% block extrahead %}
+    $('#calendar').fullCalendar({
+      defaultDate: '2018-03-12',
+      editable: true,
+      eventLimit: true, // allow "more" link when too many events
+
+      events: [
+{%for val in key.values %}
+         {
+          title: '{{val.title}}',
+          start: '{{val.start}}',
+          end:'{{val.end}}'
+        },
+        {%endfor%}
+      ],
+      header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,basicWeek,basicDay'
+			},
+			editable: false,
+			eventLimit: true, // allow "more" link when too many events
+			selectable: false,
+			selectHelper: false,
+    });
+{% endblock %}
+  });
+
+</script>
+<style>
+
+  body {
+    margin: 40px 10px;
+    padding: 0;
+    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    font-size: 14px;
+  }
+
+  #calendar {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+</style>
+</head>
+<body>
+<input type="button" value="Back to the Result" class="back"/>
+  <div id='calendar'></div>
+</body>
+</html>
